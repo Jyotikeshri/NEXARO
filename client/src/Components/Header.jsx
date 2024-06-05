@@ -11,63 +11,32 @@ import ROLE from "../Api/Role.js";
 import Context from "../Context/index.js";
 
 const Header = () => {
-  const user = useSelector((state) => state.user.user);
-  console.log("user", user);
-  const navigate = useNavigate();
+  const user = useSelector((state) => state?.user?.user);
   const dispatch = useDispatch();
-  const [showPanel, setShowPanel] = useState(false);
+  const [menuDisplay, setMenuDisplay] = useState(false);
   const context = useContext(Context);
+  const navigate = useNavigate();
   const searchInput = useLocation();
-  const URLSearch = new URLSearchParams(searchInput.search);
+  const URLSearch = new URLSearchParams(searchInput?.search);
   const searchQuery = URLSearch.getAll("q");
   const [search, setSearch] = useState(searchQuery);
 
-  useEffect(() => {
-    // Fetch user details if token is present
-    const fetchUserDetails = async () => {
-      try {
-        const response = await fetch(allApi?.currUser?.url, {
-          method: allApi?.currUser?.method,
-          credentials: "include",
-        });
-
-        const data = await response.json();
-        console.log("data", data);
-
-        if (data.success) {
-          dispatch(setUserDetails(data?.data));
-        } else {
-          // Handle error
-          console.error("Error fetching user details:", data.message);
-        }
-      } catch (error) {
-        // Handle error
-        console.error("Error fetching user details:", error.message);
-      }
-    };
-
-    fetchUserDetails();
-  }, [dispatch]);
-
   const handleLogout = async () => {
-    try {
-      const response = await fetch(allApi.logOut.url, {
-        method: allApi.logOut.method,
-        credentials: "include",
-      });
+    const fetchData = await fetch(allApi.logout_user.url, {
+      method: allApi.logout_user.method,
+      credentials: "include",
+    });
 
-      const data = await response.json();
+    const data = await fetchData.json();
 
-      if (data.success) {
-        toast.success(data.message);
-        dispatch(setUserDetails(null));
-        navigate("/");
-      } else {
-        toast.error(data.message);
-      }
-    } catch (error) {
-      console.error("Logout Error:", error);
-      toast.error("Logout failed. Please try again.");
+    if (data.success) {
+      toast.success(data.message);
+      dispatch(setUserDetails(null));
+      navigate("/");
+    }
+
+    if (data.error) {
+      toast.error(data.message);
     }
   };
 
