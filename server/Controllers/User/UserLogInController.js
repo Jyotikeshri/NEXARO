@@ -7,7 +7,6 @@ dotenv.config();
 async function userLogInController(req, res) {
   try {
     const { email, password } = req.body;
-    console.log("TOKEN_SECRET_KEY:", process.env.TOKEN_SECRET_KEY);
 
     if (!email) {
       throw new Error("Please provide email");
@@ -30,14 +29,15 @@ async function userLogInController(req, res) {
         email: user.email,
       };
       const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET_KEY, {
-        expiresIn: 60 * 60 * 8, // 8 hours
+        expiresIn: 60 * 60 * 8,
       });
 
       const tokenOption = {
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production", // only secure in production
-        sameSite: "Strict",
+        secure: process.env.NODE_ENV === "production",
       };
+
+      console.log("Generated Token:", token); // Add logging
 
       res.cookie("token", token, tokenOption).status(200).json({
         message: "Login successfully",
@@ -49,7 +49,8 @@ async function userLogInController(req, res) {
       throw new Error("Please check Password");
     }
   } catch (err) {
-    res.status(400).json({
+    console.error("Login Error:", err); // Add logging
+    res.json({
       message: err.message || err,
       error: true,
       success: false,

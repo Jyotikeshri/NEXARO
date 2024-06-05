@@ -1,8 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Logo from "../assest/Logo2.jsx";
 import { FiSearch } from "react-icons/fi";
-import { FaUser } from "react-icons/fa";
-import { FaCartShopping } from "react-icons/fa6";
+import { FaUser, FaCartShopping } from "react-icons/fa6";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import allApi from "../Api/Api.js";
@@ -12,35 +11,63 @@ import ROLE from "../Api/Role.js";
 import Context from "../Context/index.js";
 
 const Header = () => {
-  const user = useSelector((state) => state?.user?.user);
+  const user = useSelector((state) => state.user.user);
   console.log("user", user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showPanel, setShowPanel] = useState(false);
   const context = useContext(Context);
   const searchInput = useLocation();
-  const URLSearch = new URLSearchParams(searchInput?.search);
+  const URLSearch = new URLSearchParams(searchInput.search);
   const searchQuery = URLSearch.getAll("q");
   const [search, setSearch] = useState(searchQuery);
 
+  useEffect(() => {
+    // Fetch user details if token is present
+    const fetchUserDetails = async () => {
+      try {
+        const response = await fetch(allApi.userDetails.url, {
+          method: allApi.userDetails.method,
+          credentials: "include", // Ensure credentials are included
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          dispatch(setUserDetails(data.user));
+        } else {
+          console.error("Failed to fetch user details:", data.message);
+        }
+      } catch (error) {
+        console.error("Error fetching user details:", error);
+      }
+    };
+
+    fetchUserDetails();
+  }, [dispatch]);
+
   const handleLogout = async () => {
-    const fetchData = await fetch(allApi.logOut.url, {
-      method: allApi.logOut.method,
-      credentials: "include",
-    });
+    try {
+      const response = await fetch(allApi.logOut.url, {
+        method: allApi.logOut.method,
+        credentials: "include",
+      });
 
-    const data = await fetchData.json();
+      const data = await response.json();
 
-    if (data.success) {
-      toast.success(data.message);
-      dispatch(setUserDetails(null));
-      navigate("/");
-    }
-
-    if (data.error) {
-      toast.error(data.message);
+      if (data.success) {
+        toast.success(data.message);
+        dispatch(setUserDetails(null));
+        navigate("/");
+      } else {
+        toast.error(data.message);
+      }
+    } catch (error) {
+      console.error("Logout Error:", error);
+      toast.error("Logout failed. Please try again.");
     }
   };
+
   const handleSearch = (e) => {
     const { value } = e.target;
     setSearch(value);
@@ -51,23 +78,24 @@ const Header = () => {
       navigate("/search");
     }
   };
+
   return (
-    <header className="h-18  shadow-md bg-[#e6fffa]">
-      <div className="container mx-auto   flex justify-between items-center ">
+    <header className="h-18 shadow-md bg-[#e6fffa]">
+      <div className="container mx-auto flex justify-between items-center">
         <Link
           to={`/`}
-          className="flex h-17  justify-around items-center w-[150px]"
+          className="flex h-17 justify-around items-center w-[150px]"
         >
           <Logo w={100} h={50} />
           <h1 className="font-bold h-[50px] text-center text-[25px] mt-[20px]">
             Nexaro
           </h1>
         </Link>
-        <div className="hidden lg:flex items-center border focus-within:shadow-md rounded-full ">
+        <div className="hidden lg:flex items-center border focus-within:shadow-md rounded-full">
           <input
             type="text"
             placeholder="search"
-            className="w-[400px] px-2 py-1 rounded-l-full  outline-none"
+            className="w-[400px] px-2 py-1 rounded-l-full outline-none"
             onChange={handleSearch}
             value={search}
           />
@@ -78,7 +106,7 @@ const Header = () => {
             <FiSearch size={20} />
           </div>
         </div>
-        <div className="flex items-center gap-7 -ms-[100px] md:ms-0 lg:-me-[100px] ">
+        <div className="flex items-center gap-7 -ms-[100px] md:ms-0 lg:-me-[100px]">
           <div className="flex relative justify-center">
             {user?._id && (
               <div
@@ -90,7 +118,7 @@ const Header = () => {
                   <img
                     src={user?.profilePic}
                     alt={user?.username}
-                    className="h-[50px]  w-[50px] cursor-pointer rounded-full "
+                    className="h-[50px] w-[50px] cursor-pointer rounded-full"
                   />
                 ) : (
                   <FaUser size={23} className="cursor-pointer" />
@@ -120,7 +148,7 @@ const Header = () => {
             <span>
               <FaCartShopping size={22} className="cursor-pointer" />
             </span>
-            <div className="absolute py-[4px] px-[4px] rounded-full text-sm bg-[#00ffcc] -top-4 -right-3 ">
+            <div className="absolute py-[4px] px-[4px] rounded-full text-sm bg-[#00ffcc] -top-4 -right-3">
               {context?.cartProductCount ? context?.cartProductCount : 0}
             </div>
           </Link>
