@@ -1,4 +1,4 @@
-const Domain = `import.meta.env.VITE_BACKEND_URL`;
+const Domain = import.meta.env.VITE_BACKEND_URL;
 
 const allApi = {
   signUp: {
