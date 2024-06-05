@@ -13,6 +13,7 @@ import Context from "../Context/index.js";
 
 const Header = () => {
   const user = useSelector((state) => state?.user?.user);
+  console.log("user", user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showPanel, setShowPanel] = useState(false);
