@@ -29,12 +29,13 @@ async function userLogInController(req, res) {
         email: user.email,
       };
       const token = await jwt.sign(tokenData, process.env.TOKEN_SECRET_KEY, {
-        expiresIn: 60 * 60 * 8,
+        expiresIn: 60 * 60 * 8, // 8 hours
       });
 
       const tokenOption = {
         httpOnly: true,
-        secure: true,
+        secure: process.env.NODE_ENV === "production", // only secure in production
+        sameSite: "Strict",
       };
 
       res.cookie("token", token, tokenOption).status(200).json({
@@ -47,7 +48,7 @@ async function userLogInController(req, res) {
       throw new Error("Please check Password");
     }
   } catch (err) {
-    res.json({
+    res.status(400).json({
       message: err.message || err,
       error: true,
       success: false,
