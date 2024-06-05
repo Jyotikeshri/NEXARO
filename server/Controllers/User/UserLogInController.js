@@ -7,6 +7,7 @@ dotenv.config();
 async function userLogInController(req, res) {
   try {
     const { email, password } = req.body;
+    console.log("TOKEN_SECRET_KEY:", process.env.TOKEN_SECRET_KEY);
 
     if (!email) {
       throw new Error("Please provide email");
