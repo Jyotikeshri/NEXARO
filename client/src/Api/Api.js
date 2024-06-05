@@ -5,6 +5,7 @@ const allApi = {
     url: `${Domain}/signup`,
     method: "post",
   },
+
   signIn: {
     url: `${Domain}/login`,
     method: "post",

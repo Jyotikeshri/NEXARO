@@ -26,20 +26,23 @@ const Header = () => {
     // Fetch user details if token is present
     const fetchUserDetails = async () => {
       try {
-        const response = await fetch(allApi.userDetails.url, {
-          method: allApi.userDetails.method,
-          credentials: "include", // Ensure credentials are included
+        const response = await fetch(allApi?.currUser?.url, {
+          method: allApi?.currUser?.method,
+          credentials: "include",
         });
 
         const data = await response.json();
+        console.log("data", data);
 
         if (data.success) {
-          dispatch(setUserDetails(data.user));
+          dispatch(setUserDetails(data?.data));
         } else {
-          console.error("Failed to fetch user details:", data.message);
+          // Handle error
+          console.error("Error fetching user details:", data.message);
         }
       } catch (error) {
-        console.error("Error fetching user details:", error);
+        // Handle error
+        console.error("Error fetching user details:", error.message);
       }
     };
 
