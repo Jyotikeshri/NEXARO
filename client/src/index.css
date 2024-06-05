@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: rgb(240, 240, 240);
+}
+
+.customShadow {
+  shadow: 0, 0, 10px rgba(0, 0, 0, 0.2);
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+
+body::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, and Opera */
+}
