@@ -13,7 +13,7 @@ import Context from "../Context/index.js";
 const Header = () => {
   const user = useSelector((state) => state?.user?.user);
   const dispatch = useDispatch();
-  const [menuDisplay, setMenuDisplay] = useState(false);
+  const [showPanel, setShowPanel] = useState(false);
   const context = useContext(Context);
   const navigate = useNavigate();
   const searchInput = useLocation();
