@@ -111,7 +111,7 @@ const Header = () => {
                     </Link>
                   )}
                   <Link
-                    to={"/order"}
+                    to={"/all-order"}
                     className="whitespace-nowrap hidden md:block hover:bg-slate-100 p-2"
                     onClick={() => setMenuDisplay((preve) => !preve)}
                   >
