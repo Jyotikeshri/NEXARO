@@ -2,93 +2,93 @@ const Domain = import.meta.env.VITE_BACKEND_URL;
 
 const allApi = {
   signUp: {
-    url: `${Domain}/signup`,
+    url: `${Domain}/api/signup`,
     method: "post",
   },
 
   signIn: {
-    url: `${Domain}/login`,
+    url: `${Domain}/api/login`,
     method: "post",
   },
   currUser: {
-    url: `${Domain}/user-details`,
+    url: `${Domain}/api/user-details`,
     method: "get",
   },
   logOut: {
-    url: `${Domain}/logout`,
+    url: `${Domain}/api/logout`,
     method: "get",
   },
   allUser: {
-    url: `${Domain}/all-user`,
+    url: `${Domain}/api/all-user`,
     method: "get",
   },
   updateUser: {
-    url: `${Domain}/update-user`,
+    url: `${Domain}/api/update-user`,
     method: "post",
   },
   uploadProduct: {
-    url: `${Domain}/upload-product`,
+    url: `${Domain}/api/upload-product`,
     method: "post",
   },
   allProduct: {
-    url: `${Domain}/get-product`,
+    url: `${Domain}/api/get-product`,
     method: "get",
   },
   updateProduct: {
-    url: `${Domain}/update-product`,
+    url: `${Domain}/api/update-product`,
     method: "post",
   },
   categoryProduct: {
-    url: `${Domain}/get-categoryProduct`,
+    url: `${Domain}/api/get-categoryProduct`,
     method: "get",
   },
   categoryWiseProduct: {
-    url: `${Domain}/category-product`,
+    url: `${Domain}/api/category-product`,
     method: "post",
   },
   productDetails: {
-    url: `${Domain}/product-details`,
+    url: `${Domain}/api/product-details`,
     method: "post",
   },
   addToCartProduct: {
-    url: `${Domain}/addtocart`,
+    url: `${Domain}/api/addtocart`,
     method: "post",
   },
   addToCartProductCount: {
-    url: `${Domain}/countAddToCartProduct`,
+    url: `${Domain}/api/countAddToCartProduct`,
     method: "get",
   },
 
   addToCartProductView: {
-    url: `${Domain}/view-card-product`,
+    url: `${Domain}/api/view-card-product`,
     method: "get",
   },
   updateCartProduct: {
-    url: `${Domain}/update-cart-product`,
+    url: `${Domain}/api/update-cart-product`,
     method: "post",
   },
   deleteCartProduct: {
-    url: `${Domain}/delete-cart-product`,
+    url: `${Domain}/api/delete-cart-product`,
     method: "post",
   },
   searchProduct: {
-    url: `${Domain}/search`,
+    url: `${Domain}/api/search`,
     method: "get",
   },
   filterProduct: {
-    url: `${Domain}/filter-product`,
+    url: `${Domain}/api/filter-product`,
     method: "post",
   },
   payment: {
-    url: `${Domain}/checkout`,
+    url: `${Domain}/api/checkout`,
     method: "post",
   },
   getOrder: {
-    url: `${Domain}/order-list`,
+    url: `${Domain}/api/order-list`,
     method: "get",
   },
   allOrder: {
-    url: `${Domain}/all-order`,
+    url: `${Domain}/api/all-order`,
     method: "get",
   },
 };

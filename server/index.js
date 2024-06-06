@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import path from "path";
 import connectToDB from "./DB/ConnectToDB.js";
 import userRoutes from "./Routes/UserRoutes.js";
 import cookieParser from "cookie-parser";
@@ -11,10 +12,9 @@ const app = express();
 const port = process.env.PORT || 8080;
 
 // Middleware setup
-
 app.use(
   cors({
-    origin: "https://nexaro-six8.vercel.app",
+    origin: process.env.CLIENT_URL || "http://localhost:5173",
     credentials: true,
   })
 );
@@ -30,10 +30,15 @@ app.use(cookieParser());
 connectToDB();
 
 // Define routes
-app.use("/", userRoutes);
+app.use("/api", userRoutes);
 
-app.get("/", (req, res) => {
-  res.send("server is live now");
+// Serve static files from the React app
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, "client/build")));
+
+// Handle all routes and serve the React app
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client/build", "index.html"));
 });
 
 // Start the server
