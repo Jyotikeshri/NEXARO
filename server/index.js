@@ -14,7 +14,7 @@ const port = process.env.PORT || 8080;
 // Middleware setup
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://localhost:5173",
+    origin: "https://nexaro-six8.vercel.app",
     credentials: true,
   })
 );
