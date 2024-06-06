@@ -22,8 +22,8 @@ const Header = () => {
   const [search, setSearch] = useState(searchQuery);
 
   const handleLogout = async () => {
-    const fetchData = await fetch(allApi.logout_user.url, {
-      method: allApi.logout_user.method,
+    const fetchData = await fetch(allApi.logOut.url, {
+      method: allApi.logOut.method,
       credentials: "include",
     });
 
