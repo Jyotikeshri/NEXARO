@@ -38,8 +38,6 @@ async function userLogInController(req, res) {
         sameSite: "None",
       };
 
-      console.log("Generated Token:", token); // Add logging
-
       res.cookie("token", token, tokenOption).status(200).json({
         message: "Login successfully",
         data: token,
