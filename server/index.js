@@ -14,7 +14,7 @@ const port = process.env.PORT || 8080;
 
 app.use(
   cors({
-    origin: "https://nexaro-six8.vercel.app",
+    origin: "http://localhost:5173",
     credentials: true,
   })
 );
