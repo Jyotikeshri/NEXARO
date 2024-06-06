@@ -8,6 +8,8 @@ const orderController = async (request, response) => {
       .find({ userId: currentUserId })
       .sort({ createdAt: -1 });
 
+    console.log("orderList", orderList);
+
     response.json({
       data: orderList,
       message: "Order list",

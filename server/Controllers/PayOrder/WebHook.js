@@ -53,6 +53,7 @@ const webhooks = async (request, response) => {
   switch (event.type) {
     case "checkout.session.completed":
       const session = event.data.object;
+      console.log("session ", session);
 
       const lineItems = await stripe.checkout.sessions.listLineItems(
         session.id
@@ -79,7 +80,9 @@ const webhooks = async (request, response) => {
       };
 
       const order = new orderModel(orderDetails);
+      console.log("new order", order);
       const saveOrder = await order.save();
+      console.log("save order", saveOrder);
 
       if (saveOrder?._id) {
         const deleteCartItem = await addToCartModel.deleteMany({

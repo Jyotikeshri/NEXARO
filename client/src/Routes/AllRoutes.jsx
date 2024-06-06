@@ -14,8 +14,9 @@ import Cart from "../Pages/CartPage.jsx";
 import SearchProduct from "../Pages/SearchPage.jsx";
 import Success from "../Pages/Success.jsx";
 import Cancel from "../Pages/Cancel.jsx";
-import OrderPage from "../Pages/OrderPage.jsx";
+
 import AllOrder from "../Pages/AllOrderPage.jsx";
+import OrderPage from "../Pages/Order.jsx";
 
 const AllRoutes = () => {
   return (
